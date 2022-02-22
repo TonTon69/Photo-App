@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import NotFound from "./components/NotFound";
+import Header from "./components/Header";
+import "./App.css";
+
+// Lazy load - Code splitting
+const Photo = React.lazy(() => import("./features/Photo"));
+
+const theme = createTheme({
+    typography: {
+        allVariants: {
+            fontFamily: `"Poppins", "sans-serif"`,
+            textTransform: "none",
+            fontSize: 14,
+        },
+    },
+});
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <ThemeProvider theme={theme}>
+            <div className="App">
+                <Suspense fallback={<div>Loading ...</div>}>
+                    <BrowserRouter>
+                        <Header />
+
+                        <Routes>
+                            <Route
+                                path="/"
+                                element={<Navigate to="/photos" />}
+                            />
+                            <Route path="/photos/*" element={<Photo />} />
+                            <Route path="*" element={<NotFound />} />
+                        </Routes>
+                    </BrowserRouter>
+                </Suspense>
+            </div>
+        </ThemeProvider>
+    );
 }
 
 export default App;
