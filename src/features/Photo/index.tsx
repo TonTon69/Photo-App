@@ -1,15 +1,14 @@
-import React from "react";
 import { Route, Routes } from "react-router-dom";
 import NotFound from "../../components/NotFound";
-import AddEditPage from "./pages/AddEdit";
-import MainPage from "./pages/Main";
+import AddEdit from "./pages/AddEdit";
+import Main from "./pages/Main";
 
 function Photo() {
     return (
         <Routes>
-            <Route path="/" element={<MainPage />} />
-            <Route path="add" element={<AddEditPage />} />
-            <Route path=":photoId" element={<AddEditPage />} />
+            <Route path="/" element={<Main />} />
+            <Route path="add" element={<AddEdit />} />
+            <Route path=":photoId" element={<AddEdit />} />
             <Route path="*" element={<NotFound />} />
         </Routes>
     );

@@ -1,80 +1,35 @@
-import {
-    Box,
-    Button,
-    FormControl,
-    Grid,
-    InputLabel,
-    MenuItem,
-    Select,
-    TextField,
-} from "@mui/material";
-import { useState } from "react";
+import { Button, Grid, MenuItem } from "@mui/material";
+import { useForm } from "react-hook-form";
+import InputField from "../../../../custom-fields/InputField";
+import SelectField from "../../../../custom-fields/SelectField";
 import { PHOTO_CATEGORY_OPTIONS } from "../../../../constants/global";
-import Images from "../../../../constants/images";
+import RandomPhotoField from "../../../../custom-fields/RandomPhotoField";
 
 function PhotoForm() {
-    const [selectedId, setSelectedId] = useState<number>(-1);
+    const { handleSubmit, control } = useForm();
+    const onSubmit = (data: any) => console.log(data);
 
     return (
-        <form noValidate>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container direction="column">
                 <Grid item>
-                    <TextField
-                        id="title-input"
-                        name="title"
-                        label="Title"
-                        type="text"
-                        fullWidth
-                        margin="normal"
-                    />
+                    <InputField name="title" control={control} label="Title" />
                 </Grid>
                 <Grid item>
-                    <FormControl
-                        // error={formValues.address.error}
-                        fullWidth
-                        margin="normal"
+                    <SelectField
+                        name="category"
+                        control={control}
+                        label="Category"
                     >
-                        <InputLabel id="select-label-category">
-                            Category
-                        </InputLabel>
-                        <Select
-                            labelId="select-label-category"
-                            name="category"
-                            label="Category"
-                            value={selectedId === -1 ? "" : selectedId}
-                            onChange={(e) => {
-                                setSelectedId(Number(e.target.value));
-                            }}
-                        >
-                            {PHOTO_CATEGORY_OPTIONS.map((option, i) => (
-                                <MenuItem key={i} value={option.value}>
-                                    {option.label}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                        {/* <FormHelperText>
-                            {formValues.address.error &&
-                                formValues.address.errorMessage}
-                        </FormHelperText> */}
-                    </FormControl>
+                        {PHOTO_CATEGORY_OPTIONS.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </SelectField>
                 </Grid>
                 <Grid item sx={{ display: "flex", mt: 2 }}>
-                    <Box>
-                        <Button
-                            variant="outlined"
-                            style={{ textTransform: "none" }}
-                        >
-                            Random a photo
-                        </Button>
-                    </Box>
-                    <Box sx={{ ml: 2 }}>
-                        <img
-                            width="200px"
-                            height="200px"
-                            src={Images.PINK_BG}
-                            alt="random"
-                        />
-                    </Box>
+                    <RandomPhotoField name="photo" control={control} />
                 </Grid>
                 <Grid item>
                     <Button
@@ -82,7 +37,6 @@ function PhotoForm() {
                         color="primary"
                         type="submit"
                         sx={{ mt: 3 }}
-                        style={{ textTransform: "none" }}
                     >
                         Add to ablum
                     </Button>

@@ -1,7 +1,7 @@
 import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
-function index() {
+function Header() {
     return (
         <Box>
             <AppBar
@@ -26,4 +26,4 @@ function index() {
     );
 }
 
-export default index;
+export default Header;

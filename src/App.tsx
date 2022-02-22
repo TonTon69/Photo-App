@@ -1,10 +1,10 @@
 import React, { Suspense } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import NotFound from "./components/NotFound";
-import Header from "./components/Header";
-import "./App.css";
 
+import Header from "./components/Header";
+import NotFound from "./components/NotFound";
+import "./App.css";
 // Lazy load - Code splitting
 const Photo = React.lazy(() => import("./features/Photo"));
 
