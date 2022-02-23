@@ -1,32 +1,41 @@
 import { TextField } from "@mui/material";
-import { Controller } from "react-hook-form";
+import { useFormContext, Controller } from "react-hook-form";
 
 interface IInputFieldProps {
     name: string;
-    control: any;
     label: string;
+    errorobj: {
+        [x: string]: any;
+    };
 }
 
 function InputField(props: IInputFieldProps) {
-    const { name, control, label } = props;
+    const { control } = useFormContext();
+    const { name, label, errorobj } = props;
+
+    let isError: boolean = false;
+    let errorMessage: string = "";
+    if (errorobj && errorobj.hasOwnProperty(name)) {
+        isError = true;
+        errorMessage = errorobj[name].message;
+    }
 
     return (
         <Controller
             name={name}
             control={control}
             defaultValue=""
-            render={({ field: { onChange, value }, fieldState: { error } }) => (
+            render={({ field: { onChange, value } }) => (
                 <TextField
                     label={label}
                     value={value}
                     onChange={onChange}
                     fullWidth
-                    margin="normal"
-                    error={!!error}
-                    helperText={error ? error.message : null}
+                    sx={{ mb: 2 }}
+                    error={isError}
+                    helperText={errorMessage}
                 />
             )}
-            rules={{ required: `${label} required` }}
         />
     );
 }

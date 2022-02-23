@@ -2,6 +2,8 @@ import { Container } from "@mui/material";
 import Banner from "../../../../components/Banner";
 import PhotoForm from "../../components/PhotoForm";
 
+import "./AddEdit.scss";
+
 function AddEdit() {
     return (
         <div className="photo-edit">
