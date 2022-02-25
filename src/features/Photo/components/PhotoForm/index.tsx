@@ -6,13 +6,19 @@ import { PHOTO_CATEGORY_OPTIONS } from "../../../../constants/global";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+interface IPhotoFormProps {
+    onSubmit: any;
+}
+
 const validationSchema = Yup.object().shape({
     title: Yup.string().required("Title required"),
     categoryId: Yup.number().required("Category required").nullable(),
     photo: Yup.string().required("Photo required"),
 });
 
-function PhotoForm() {
+function PhotoForm(props: IPhotoFormProps) {
+    const { onSubmit } = props;
+
     const methods = useForm({
         resolver: yupResolver(validationSchema),
     });
@@ -20,7 +26,6 @@ function PhotoForm() {
         handleSubmit,
         formState: { errors },
     } = methods;
-    const onSubmit = (data: any) => console.log(data);
 
     return (
         <FormProvider {...methods}>

@@ -1,8 +1,12 @@
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Banner from "../../../../components/Banner";
 import Images from "../../../../constants/images";
 
 function Main() {
+    // const photos = useSelector((state) => state.photos);
+    // console.log("List of photos: ", photos);
+
     return (
         <div className="photo-main">
             <Banner
