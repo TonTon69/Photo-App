@@ -1,4 +1,5 @@
-import { Button, Grid, MenuItem } from "@mui/material";
+import React from "react";
+import { Button, CircularProgress, Grid, MenuItem } from "@mui/material";
 import { useForm, FormProvider } from "react-hook-form";
 import InputField from "../../../../custom-fields/InputField";
 import SelectField from "../../../../custom-fields/SelectField";
@@ -8,6 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 interface IPhotoFormProps {
     onSubmit: any;
+    initialValues: any;
 }
 
 const validationSchema = Yup.object().shape({
@@ -17,14 +19,16 @@ const validationSchema = Yup.object().shape({
 });
 
 function PhotoForm(props: IPhotoFormProps) {
-    const { onSubmit } = props;
+    const { onSubmit, initialValues } = props;
+
+    console.log(initialValues);
 
     const methods = useForm({
         resolver: yupResolver(validationSchema),
     });
     const {
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isSubmitting },
     } = methods;
 
     return (
@@ -68,7 +72,10 @@ function PhotoForm(props: IPhotoFormProps) {
                             type="submit"
                             sx={{ mt: 3 }}
                         >
-                            Add to ablum
+                            Add to ablum&nbsp;
+                            {isSubmitting && (
+                                <CircularProgress color="inherit" size={20} />
+                            )}
                         </Button>
                     </Grid>
                 </Grid>

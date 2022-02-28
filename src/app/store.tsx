@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import photoReducer from "../features/Photo/photoSlice";
+import photoSlice from "../features/Photo/photoSlice";
 
 const rootReducer = {
-    photos: photoReducer,
+    photo: photoSlice,
 };
 
 const store = configureStore({
     reducer: rootReducer,
 });
 
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 export default store;

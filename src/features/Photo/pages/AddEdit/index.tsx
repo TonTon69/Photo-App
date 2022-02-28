@@ -1,24 +1,49 @@
 import { Container } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAppSelector } from "../../../../app/hooks";
 import Banner from "../../../../components/Banner";
 import PhotoForm from "../../components/PhotoForm";
 import { addPhoto } from "../../photoSlice";
+import { v4 as uuidv4 } from "uuid";
 
 import "./AddEdit.scss";
+
+interface PhotoFormData {
+    title: string;
+    categoryId: number;
+    photo: string;
+}
 
 function AddEdit() {
     const dispatch = useDispatch();
     const history = useNavigate();
+    const { photoId } = useParams();
 
-    const handleSubmit = (values: any) => {
-        console.log("Form submit: ", values);
+    const isAddMode = !photoId;
 
-        const action = addPhoto(values);
-        console.log({ action });
-        dispatch(action);
+    const editedPhoto = useAppSelector((state) =>
+        state.photo.photoList.find((x) => x.id === photoId)
+    );
 
-        history("/photos");
+    const initialValues = isAddMode ? {} : editedPhoto;
+
+    const handleSubmit = (values: PhotoFormData) => {
+        const { title, categoryId, photo } = values;
+
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                const action = addPhoto({
+                    title,
+                    categoryId,
+                    photo,
+                    id: uuidv4(),
+                });
+                dispatch(action);
+                history("/photos");
+                resolve(true);
+            }, 2000);
+        });
     };
 
     return (
@@ -27,7 +52,10 @@ function AddEdit() {
 
             <div className="photo-edit__form">
                 <Container maxWidth="sm">
-                    <PhotoForm onSubmit={handleSubmit} />
+                    <PhotoForm
+                        initialValues={initialValues}
+                        onSubmit={handleSubmit}
+                    />
                 </Container>
             </div>
         </div>
