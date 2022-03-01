@@ -15,10 +15,10 @@ function Header() {
                     }}
                 >
                     <Typography variant="h6" component="div">
-                        H69
+                        <Link to="/">H69</Link>
                     </Typography>
                     <Button color="inherit">
-                        <Link to="/">Redux Project</Link>
+                        <Link to="/sign-in">Sign In</Link>
                     </Button>
                 </Toolbar>
             </AppBar>
