@@ -9,7 +9,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 interface IPhotoFormProps {
     onSubmit: any;
-    initialValues: any;
+    initialValues: {} | undefined;
+    isAddMode: boolean;
 }
 
 const validationSchema = Yup.object().shape({
@@ -19,13 +20,13 @@ const validationSchema = Yup.object().shape({
 });
 
 function PhotoForm(props: IPhotoFormProps) {
-    const { onSubmit, initialValues } = props;
-
-    console.log(initialValues);
+    const { onSubmit, initialValues, isAddMode } = props;
 
     const methods = useForm({
+        defaultValues: initialValues,
         resolver: yupResolver(validationSchema),
     });
+
     const {
         handleSubmit,
         formState: { errors, isSubmitting },
@@ -68,11 +69,12 @@ function PhotoForm(props: IPhotoFormProps) {
                     <Grid item>
                         <Button
                             variant="contained"
-                            color="primary"
+                            color={isAddMode ? "primary" : "success"}
                             type="submit"
                             sx={{ mt: 3 }}
                         >
-                            Add to ablum&nbsp;
+                            {isAddMode ? "Add to ablum" : "Update your photo"}
+                            &nbsp;
                             {isSubmitting && (
                                 <CircularProgress color="inherit" size={20} />
                             )}

@@ -28,7 +28,7 @@ function InputField(props: IInputFieldProps) {
             render={({ field: { onChange, value } }) => (
                 <TextField
                     label={label}
-                    value={value}
+                    value={value || ""}
                     onChange={onChange}
                     fullWidth
                     sx={{ mb: 2 }}

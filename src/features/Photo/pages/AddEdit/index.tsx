@@ -4,12 +4,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "../../../../app/hooks";
 import Banner from "../../../../components/Banner";
 import PhotoForm from "../../components/PhotoForm";
-import { addPhoto } from "../../photoSlice";
+import { addPhoto, updatePhoto } from "../../photoSlice";
 import { v4 as uuidv4 } from "uuid";
 
 import "./AddEdit.scss";
 
 interface PhotoFormData {
+    id: string;
     title: string;
     categoryId: number;
     photo: string;
@@ -29,17 +30,20 @@ function AddEdit() {
     const initialValues = isAddMode ? {} : editedPhoto;
 
     const handleSubmit = (values: PhotoFormData) => {
-        const { title, categoryId, photo } = values;
-
         return new Promise((resolve) => {
             setTimeout(() => {
-                const action = addPhoto({
-                    title,
-                    categoryId,
-                    photo,
-                    id: uuidv4(),
-                });
-                dispatch(action);
+                if (isAddMode) {
+                    // add
+                    const action = addPhoto({
+                        ...values,
+                        id: uuidv4(),
+                    });
+                    dispatch(action);
+                } else {
+                    // edit
+                    const action = updatePhoto(values);
+                    dispatch(action);
+                }
                 history("/photos");
                 resolve(true);
             }, 2000);
@@ -53,6 +57,7 @@ function AddEdit() {
             <div className="photo-edit__form">
                 <Container maxWidth="sm">
                     <PhotoForm
+                        isAddMode={isAddMode}
                         initialValues={initialValues}
                         onSubmit={handleSubmit}
                     />
