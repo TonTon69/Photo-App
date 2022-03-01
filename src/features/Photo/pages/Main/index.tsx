@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Container } from "@mui/material";
 import { Box } from "@mui/system";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,10 +8,25 @@ import Images from "../../../../constants/images";
 import Photo from "../../../../model/Photo";
 import PhotoList from "../../components/PhotoList";
 import { removePhoto } from "../../photoSlice";
+import Notification from "../../../../components/Notification";
+import ConfirmDialog from "../../../../components/ConfirmDialog";
 
 function Main() {
     const dispatch = useAppDispatch();
     const history = useNavigate();
+
+    const [notify, setNotify] = useState({
+        isOpen: false,
+        message: "",
+        type: "success",
+    });
+
+    const [confirmDialog, setConfirmDialog] = useState({
+        isOpen: false,
+        title: "",
+        subTitle: "",
+        onConfirm: () => {},
+    });
 
     // connect store
     const getPhotoList = useAppSelector((state) => state.photo.photoList);
@@ -22,9 +38,27 @@ function Main() {
     };
 
     const handlePhotoRemoveClick = (photo: Photo) => {
-        const removePhotoId = photo.id;
-        const action = removePhoto({ id: removePhotoId });
-        dispatch(action);
+        setConfirmDialog({
+            isOpen: true,
+            title: "Are you sure to delete this photo?",
+            subTitle: "You can't undo this operation",
+            onConfirm: () => {
+                const removePhotoId = photo.id;
+                const action = removePhoto({ id: removePhotoId });
+                dispatch(action);
+
+                setNotify({
+                    isOpen: true,
+                    message: "Deleted Successfully",
+                    type: "error",
+                });
+
+                setConfirmDialog({
+                    ...confirmDialog,
+                    isOpen: false,
+                });
+            },
+        });
     };
 
     return (
@@ -45,6 +79,12 @@ function Main() {
                     onPhotoRemoveClick={handlePhotoRemoveClick}
                 />
             </Container>
+
+            <Notification notify={notify} setNotify={setNotify} />
+            <ConfirmDialog
+                confirmDialog={confirmDialog}
+                setConfirmDialog={setConfirmDialog}
+            />
         </div>
     );
 }
