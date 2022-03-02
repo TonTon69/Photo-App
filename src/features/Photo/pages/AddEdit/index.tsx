@@ -45,7 +45,8 @@ function AddEdit() {
                     const action = updatePhoto(values);
                     dispatch(action);
                 }
-                history("/photos");
+
+                history("/photos", { state: true });
                 resolve(true);
             }, 2000);
         });

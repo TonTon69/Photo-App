@@ -1,7 +1,6 @@
-import { useState } from "react";
-import { Container } from "@mui/material";
-import { Box } from "@mui/system";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Box, Container } from "@mui/material";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import Banner from "../../../../components/Banner";
 import Images from "../../../../constants/images";
@@ -14,6 +13,7 @@ import ConfirmDialog from "../../../../components/ConfirmDialog";
 function Main() {
     const dispatch = useAppDispatch();
     const history = useNavigate();
+    const location = useLocation();
 
     const [notify, setNotify] = useState({
         isOpen: false,
@@ -60,6 +60,16 @@ function Main() {
             },
         });
     };
+
+    useEffect(() => {
+        if (location.state) {
+            setNotify({
+                isOpen: true,
+                message: "Submitted Successfully",
+                type: "success",
+            });
+        }
+    }, []);
 
     return (
         <div className="photo-main">
