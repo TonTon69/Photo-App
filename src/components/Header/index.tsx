@@ -14,9 +14,17 @@ function Header() {
                         justifyContent: "space-between",
                     }}
                 >
-                    <Typography variant="h6" component="div">
+                    <Typography variant="h6">
                         <Link to="/">H69</Link>
                     </Typography>
+                    <Box>
+                        <Button color="inherit">
+                            <Link to="/photos">Photos</Link>
+                        </Button>
+                        <Button color="inherit">
+                            <Link to="/products">Products</Link>
+                        </Button>
+                    </Box>
                     <Button color="inherit">
                         <Link to="/sign-in">Sign In</Link>
                     </Button>

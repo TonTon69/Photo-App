@@ -13,6 +13,8 @@ import "./App.css";
 import { useAppDispatch } from "./app/hooks";
 import { getMe } from "./app/userSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
+
+import Product from "./features/Product";
 // Lazy load - Code splitting
 const Photo = React.lazy(() => import("./features/Photo"));
 
@@ -32,6 +34,13 @@ const theme = createTheme({
     },
 });
 
+// interface IUser {
+//     id: string;
+//     name: string;
+//     email: string;
+//     photoUrl: string;
+// }
+
 function App() {
     const dispatch = useAppDispatch();
 
@@ -50,6 +59,8 @@ function App() {
                     const actionResult = await dispatch(action);
                     const currentUser = unwrapResult(actionResult);
                     console.log(currentUser);
+
+                    // if (currentUser) setCurrentUser(currentUser);
                 } catch (error) {
                     console.log("Failed to Login: ", error);
                 }
@@ -72,6 +83,7 @@ function App() {
                             />
                             <Route path="/photos/*" element={<Photo />} />
                             <Route path="/sign-in" element={<SignIn />} />
+                            <Route path="/products/*" element={<Product />} />
                             <Route path="*" element={<NotFound />} />
                         </Routes>
                     </BrowserRouter>
