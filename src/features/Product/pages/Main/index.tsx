@@ -1,4 +1,4 @@
-import { Pagination } from "@mui/material";
+import { Box, Container, Pagination, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
 import productApi from "../../../../api/productApi";
@@ -62,23 +62,29 @@ function Main() {
                 backgroundUrl={Images.ORANGE_BG}
             />
 
-            <PostFiltersForm onSubmit={handleFiltersChange} />
+            <Container>
+                <Box sx={{ my: 4 }}>
+                    <PostFiltersForm onSubmit={handleFiltersChange} />
 
-            <ul>
-                {productList.map((product) => (
-                    <li key={product.id}>
-                        {product.name} - {product.salePrice}đ
-                    </li>
-                ))}
-            </ul>
+                    <Box sx={{ my: 4 }}>
+                        <ul>
+                            {productList.map((product) => (
+                                <li key={product.id}>
+                                    {product.name} - {product.salePrice}đ
+                                </li>
+                            ))}
+                        </ul>
+                    </Box>
 
-            <Pagination
-                count={totalPages}
-                color="primary"
-                siblingCount={1}
-                boundaryCount={1}
-                onChange={handlePageChange}
-            />
+                    <Pagination
+                        count={totalPages}
+                        color="primary"
+                        siblingCount={1}
+                        boundaryCount={1}
+                        onChange={handlePageChange}
+                    />
+                </Box>
+            </Container>
         </div>
     );
 }

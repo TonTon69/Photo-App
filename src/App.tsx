@@ -34,15 +34,11 @@ const theme = createTheme({
     },
 });
 
-// interface IUser {
-//     id: string;
-//     name: string;
-//     email: string;
-//     photoUrl: string;
-// }
-
 function App() {
     const dispatch = useAppDispatch();
+    const [user, setUser] = useState<any>(null);
+
+    console.log("user: ", user);
 
     useEffect(() => {
         const unregisterAuthObserver = firebase
@@ -60,7 +56,7 @@ function App() {
                     const currentUser = unwrapResult(actionResult);
                     console.log(currentUser);
 
-                    // if (currentUser) setCurrentUser(currentUser);
+                    if (currentUser) setUser(currentUser);
                 } catch (error) {
                     console.log("Failed to Login: ", error);
                 }

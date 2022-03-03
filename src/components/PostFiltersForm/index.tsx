@@ -1,3 +1,4 @@
+import { TextField } from "@mui/material";
 import React, { useRef, useState } from "react";
 
 interface IPostFiltersFormProps {
@@ -30,9 +31,11 @@ function PostFiltersForm(props: IPostFiltersFormProps) {
     };
 
     return (
-        <form>
-            <input
-                type="text"
+        <form autoComplete="off">
+            <TextField
+                id="outlined-basic"
+                label="Search"
+                variant="outlined"
                 value={searchTerm}
                 onChange={handleSearchTermChange}
             />

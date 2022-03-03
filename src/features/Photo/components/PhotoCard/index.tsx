@@ -7,7 +7,7 @@ import {
     CardMedia,
     Typography,
 } from "@mui/material";
-import Photo from "../../../../model/Photo";
+import { Photo } from "../../../../models/Photo";
 
 interface IPhotoCardProps {
     photo: Photo;

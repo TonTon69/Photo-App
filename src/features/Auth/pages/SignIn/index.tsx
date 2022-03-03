@@ -1,8 +1,11 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import { StyledFirebaseAuth } from "react-firebaseui";
+import { useAppDispatch } from "../../../../app/hooks";
+import { login } from "../../authSlice";
+import AuthForm from "../../components/AuthForm";
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -12,6 +15,14 @@ const uiConfig = {
 };
 
 function SignIn() {
+    const dispatch = useAppDispatch();
+
+    const handleLoginClick = () => {
+        console.log("Hello");
+    };
+
+    const initialValues = {};
+
     return (
         <Box sx={{ textAlign: "center", my: 4 }}>
             <Typography variant="h4">Login Form</Typography>
@@ -20,6 +31,13 @@ function SignIn() {
                 uiConfig={uiConfig}
                 firebaseAuth={firebase.auth()}
             />
+
+            <Container maxWidth="sm" sx={{ my: 6 }}>
+                <AuthForm
+                    initialValues={initialValues}
+                    onSubmit={handleLoginClick}
+                />
+            </Container>
         </Box>
     );
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid } from "@mui/material";
 import PhotoCard from "../PhotoCard";
-import Photo from "../../../../model/Photo";
+import { Photo } from "../../../../models/Photo";
 
 interface IPhotoListProps {
     photoList: Photo[] | undefined;

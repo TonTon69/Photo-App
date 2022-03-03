@@ -1,36 +1,45 @@
-import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
+import {
+    AppBar,
+    Box,
+    Button,
+    Container,
+    Toolbar,
+    Typography,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 
 function Header() {
     return (
-        <Box>
-            <AppBar
-                position="static"
-                style={{ backgroundColor: "#fafafa", color: "#111" }}
-            >
+        <AppBar
+            position="static"
+            style={{ backgroundColor: "#fafafa", color: "#111" }}
+        >
+            <Container>
                 <Toolbar
                     sx={{
                         display: "flex",
                         justifyContent: "space-between",
                     }}
                 >
-                    <Typography variant="h6">
-                        <Link to="/">H69</Link>
-                    </Typography>
+                    <Link to="/">
+                        <Typography variant="h6" fontWeight={700}>
+                            H69
+                        </Typography>
+                    </Link>
                     <Box>
-                        <Button color="inherit">
-                            <Link to="/photos">Photos</Link>
-                        </Button>
-                        <Button color="inherit">
-                            <Link to="/products">Products</Link>
-                        </Button>
+                        <Link to="/photos">
+                            <Button variant="text">Photos</Button>
+                        </Link>
+                        <Link to="/products">
+                            <Button variant="text">Products</Button>
+                        </Link>
                     </Box>
-                    <Button color="inherit">
-                        <Link to="/sign-in">Sign In</Link>
-                    </Button>
+                    <Link to="/sign-in">
+                        <Button variant="outlined">Sign In</Button>
+                    </Link>
                 </Toolbar>
-            </AppBar>
-        </Box>
+            </Container>
+        </AppBar>
     );
 }
 

@@ -7,11 +7,12 @@ interface IInputFieldProps {
     errorobj: {
         [x: string]: any;
     };
+    type?: string;
 }
 
 function InputField(props: IInputFieldProps) {
     const { control } = useFormContext();
-    const { name, label, errorobj } = props;
+    const { name, label, errorobj, type } = props;
 
     let isError: boolean = false;
     let errorMessage: string = "";
@@ -34,6 +35,7 @@ function InputField(props: IInputFieldProps) {
                     sx={{ mb: 2 }}
                     error={isError}
                     helperText={errorMessage}
+                    type={type}
                 />
             )}
         />

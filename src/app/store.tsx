@@ -1,8 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import photoSlice from "../features/Photo/photoSlice";
+import authSlice from "../features/Auth/authSlice";
+import userSlice from "./userSlice";
 
 const rootReducer = {
     photo: photoSlice,
+    user: userSlice,
+    auth: authSlice,
 };
 
 const store = configureStore({

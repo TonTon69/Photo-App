@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { Box, Container } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import Banner from "../../../../components/Banner";
 import Images from "../../../../constants/images";
-import Photo from "../../../../model/Photo";
+import { Photo } from "../../../../models/Photo";
 import PhotoList from "../../components/PhotoList";
 import { removePhoto } from "../../photoSlice";
 import Notification from "../../../../components/Notification";
@@ -80,14 +80,18 @@ function Main() {
 
             <Container>
                 <Box sx={{ my: 4, textAlign: "center" }}>
-                    <Link to="/photos/add">Add a new photo</Link>
+                    <Link to="/photos/add">
+                        <Button variant="outlined">Add a new photo</Button>
+                    </Link>
                 </Box>
 
-                <PhotoList
-                    photoList={getPhotoList}
-                    onPhotoEditClick={handlePhotoEditClick}
-                    onPhotoRemoveClick={handlePhotoRemoveClick}
-                />
+                <Box sx={{ mb: 6 }}>
+                    <PhotoList
+                        photoList={getPhotoList}
+                        onPhotoEditClick={handlePhotoEditClick}
+                        onPhotoRemoveClick={handlePhotoRemoveClick}
+                    />
+                </Box>
             </Container>
 
             <Notification notify={notify} setNotify={setNotify} />
