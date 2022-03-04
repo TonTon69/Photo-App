@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Container, Typography } from "@mui/material";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import { StyledFirebaseAuth } from "react-firebaseui";
-import { useAppDispatch } from "../../../../app/hooks";
-import { login } from "../../authSlice";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import { authSelector, login } from "../../authSlice";
 import AuthForm from "../../components/AuthForm";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { User } from "../../../../models/User";
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -16,12 +19,32 @@ const uiConfig = {
 
 function SignIn() {
     const dispatch = useAppDispatch();
+    const history = useNavigate();
 
-    const handleLoginClick = () => {
-        console.log("Hello");
+    const { isFetching, isSuccess, isError, errorMessage } =
+        useAppSelector(authSelector);
+
+    const handleLoginClick = (data: User) => {
+        // dispatch(login(data));
+        console.log(data);
     };
 
     const initialValues = {};
+
+    // useEffect(() => {
+    //     return () => {
+    //         dispatch(clearState());
+    //     };
+    // }, []);
+
+    useEffect(() => {
+        if (isSuccess) {
+            history("/photos");
+        }
+        if (isError) {
+            // dispatch(clearState());
+        }
+    }, [isSuccess, isError]);
 
     return (
         <Box sx={{ textAlign: "center", my: 4 }}>

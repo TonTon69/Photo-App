@@ -1,7 +1,8 @@
 import axiosClient from "./axiosClient";
+import { ListParams, ListResponse, Product } from "../models";
 
 const productApi = {
-    getAll: (params: { _page: number; _limit: number }) => {
+    getAll: (params: ListParams): Promise<ListResponse<Product>> => {
         const url = "/products";
         return axiosClient.get(url, { params });
     },

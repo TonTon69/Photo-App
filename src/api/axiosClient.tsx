@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import queryString from "query-string";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
@@ -46,7 +46,7 @@ const axiosClient = axios.create({
     paramsSerializer: (params) => queryString.stringify(params),
 });
 
-axiosClient.interceptors.request.use(async (config) => {
+axiosClient.interceptors.request.use(async (config: AxiosRequestConfig) => {
     // Handle token here ...
     const token = await getFirebaseToken();
     if (token) {
@@ -59,7 +59,7 @@ axiosClient.interceptors.request.use(async (config) => {
 });
 
 axiosClient.interceptors.response.use(
-    (response) => {
+    (response: AxiosResponse) => {
         if (response && response.data) {
             return response.data;
         }

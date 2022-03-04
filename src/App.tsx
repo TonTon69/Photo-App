@@ -15,6 +15,7 @@ import { getMe } from "./app/userSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
 
 import Product from "./features/Product";
+import PrivateRoute from "./components/PrivateRoute";
 // Lazy load - Code splitting
 const Photo = React.lazy(() => import("./features/Photo"));
 
@@ -79,7 +80,14 @@ function App() {
                             />
                             <Route path="/photos/*" element={<Photo />} />
                             <Route path="/sign-in" element={<SignIn />} />
-                            <Route path="/products/*" element={<Product />} />
+                            <Route
+                                path="/products/*"
+                                element={
+                                    <PrivateRoute>
+                                        <Product />
+                                    </PrivateRoute>
+                                }
+                            />
                             <Route path="*" element={<NotFound />} />
                         </Routes>
                     </BrowserRouter>

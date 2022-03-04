@@ -5,18 +5,20 @@ import InputField from "../../../../custom-fields/InputField";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-interface IPhotoFormProps {
+interface IAuthFormProps {
     onSubmit: any;
     initialValues: {} | undefined;
 }
 
 const validationSchema = Yup.object().shape({
-    title: Yup.string().required("Title required"),
-    categoryId: Yup.number().required("Category required").nullable(),
-    photo: Yup.string().required("Photo required"),
+    email: Yup.string().email().required("Email required"),
+    password: Yup.string()
+        .required("Password required")
+        .min(8, "Password is too short - should be 8 chars minimum.")
+        .matches(/(?=.*[0-9])/, "Password must contain a number."),
 });
 
-function AuthForm(props: IPhotoFormProps) {
+function AuthForm(props: IAuthFormProps) {
     const { onSubmit, initialValues } = props;
 
     const methods = useForm({
@@ -35,8 +37,8 @@ function AuthForm(props: IPhotoFormProps) {
                 <Grid container direction="column">
                     <Grid item>
                         <InputField
-                            name="username"
-                            label="Username"
+                            name="email"
+                            label="Email"
                             errorobj={errors}
                         />
                     </Grid>

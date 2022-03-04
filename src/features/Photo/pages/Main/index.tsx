@@ -4,11 +4,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import Banner from "../../../../components/Banner";
 import Images from "../../../../constants/images";
-import { Photo } from "../../../../models/Photo";
 import PhotoList from "../../components/PhotoList";
 import { removePhoto } from "../../photoSlice";
 import Notification from "../../../../components/Notification";
 import ConfirmDialog from "../../../../components/ConfirmDialog";
+import { Photo } from "../../../../models";
 
 function Main() {
     const dispatch = useAppDispatch();

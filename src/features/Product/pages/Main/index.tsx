@@ -5,22 +5,16 @@ import productApi from "../../../../api/productApi";
 import Banner from "../../../../components/Banner";
 import PostFiltersForm from "../../../../components/PostFiltersForm";
 import Images from "../../../../constants/images";
-
-interface IProduct {
-    id: number;
-    name: string;
-    salePrice: number;
-}
+import { ListParams, Product } from "../../../../models";
 
 function Main() {
-    const [productList, setProductList] = useState<IProduct[]>([]);
-    const [pagination, setPagination] = useState({
+    const [productList, setProductList] = useState<Product[]>([]);
+    const [pagination, setPagination] = useState<ListParams>({
         _page: 1,
         _limit: 10,
-        _totalRows: 120,
         name_like: "",
     });
-    const [totalPages, setTotalPages] = useState(0);
+    const [totalPages, setTotalPages] = useState<number>(0);
 
     useEffect(() => {
         const fetchProductList = async () => {
@@ -30,7 +24,7 @@ function Main() {
                 setProductList(response.data);
 
                 const count = Math.ceil(
-                    pagination._totalRows / pagination._limit
+                    response.pagination._totalRows / response.pagination._limit
                 );
                 setTotalPages(count);
             } catch (error) {
@@ -38,6 +32,8 @@ function Main() {
             }
         };
         fetchProductList();
+
+        // return fetchProductList;
     }, [pagination]);
 
     const handlePageChange = (event: unknown, newPage: number) => {
