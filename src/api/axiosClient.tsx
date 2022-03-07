@@ -1,41 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import queryString from "query-string";
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-
-const getFirebaseToken = async () => {
-    const currentUser = firebase.auth().currentUser;
-    if (currentUser) return currentUser.getIdToken();
-
-    // Not logged in
-    const hasRememberedAccount = localStorage.getItem(
-        "firebaseui::rememberedAccounts"
-    );
-    if (!hasRememberedAccount) return null;
-
-    // Logged in but current user is not fetched --> wait (10s)
-    return new Promise((resolve, reject) => {
-        const waitTimer = setTimeout(() => {
-            reject(null);
-            console.log("Reject timeout");
-        }, 10000);
-
-        const unregisterAuthObserver = firebase
-            .auth()
-            .onAuthStateChanged(async (user) => {
-                if (!user) {
-                    reject(null);
-                }
-
-                const token = await user?.getIdToken();
-                console.log("[AXIOS] Logged in user token: ", token);
-                resolve(token);
-
-                unregisterAuthObserver();
-                clearTimeout(waitTimer);
-            });
-    });
-};
 
 // set up default config
 const axiosClient = axios.create({
@@ -48,13 +12,6 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(async (config: AxiosRequestConfig) => {
     // Handle token here ...
-    const token = await getFirebaseToken();
-    if (token) {
-        config.headers = {
-            Authorization: `Bearer ${token}`,
-        };
-    }
-
     return config;
 });
 

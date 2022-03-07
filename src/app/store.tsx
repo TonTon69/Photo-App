@@ -1,16 +1,14 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import photoSlice from "../features/Photo/photoSlice";
-import authSlice from "../features/Auth/authSlice";
-import userSlice from "./userSlice";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./rootSaga";
+import photoSlice from "../features/Photo/photoSlice";
+import authReducer from "../features/Auth/authSlice";
 
 const sagaMiddleware = createSagaMiddleware();
 
 const rootReducer = {
     photo: photoSlice,
-    user: userSlice,
-    auth: authSlice,
+    auth: authReducer,
 };
 
 export const store = configureStore({

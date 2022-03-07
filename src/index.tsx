@@ -6,12 +6,17 @@ import { store } from "./app/store";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { CssBaseline } from "@mui/material";
+import { AuthProvider } from "./contexts/AuthContext";
 
 ReactDOM.render(
     <React.StrictMode>
-        <Provider store={store}>
-            <App />
-        </Provider>
+        <AuthProvider>
+            <Provider store={store}>
+                <CssBaseline />
+                <App />
+            </Provider>
+        </AuthProvider>
     </React.StrictMode>,
     document.getElementById("root")
 );
