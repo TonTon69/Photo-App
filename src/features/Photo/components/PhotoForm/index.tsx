@@ -6,9 +6,10 @@ import SelectField from "../../../../custom-fields/SelectField";
 import { PHOTO_CATEGORY_OPTIONS } from "../../../../constants/global";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Photo } from "../../../../models";
 
 interface IPhotoFormProps {
-    onSubmit: any;
+    onSubmit: (values: Photo) => Promise<unknown>;
     initialValues: {} | undefined;
     isAddMode: boolean;
 }
@@ -22,7 +23,7 @@ const validationSchema = Yup.object().shape({
 function PhotoForm(props: IPhotoFormProps) {
     const { onSubmit, initialValues, isAddMode } = props;
 
-    const methods = useForm({
+    const methods = useForm<Photo>({
         defaultValues: initialValues,
         resolver: yupResolver(validationSchema),
     });

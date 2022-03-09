@@ -1,6 +1,6 @@
+import React, { useEffect, useState } from "react";
 import { Box, Container, Pagination } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import React, { useEffect, useState } from "react";
 
 import productApi from "../../../../api/productApi";
 import Banner from "../../../../components/Banner";
@@ -29,7 +29,7 @@ function Main() {
     const [productList, setProductList] = useState<Product[]>([]);
     const [pagination, setPagination] = useState<ListParams>({
         _page: 1,
-        _limit: 10,
+        _limit: 100,
         name_like: "",
     });
     const [totalPages, setTotalPages] = useState<number>(0);
@@ -39,22 +39,21 @@ function Main() {
             try {
                 const response = await productApi.getAll(pagination);
                 console.log(response);
+
                 setProductList(response.data);
 
-                const count = Math.ceil(
-                    response.pagination._totalRows / response.pagination._limit
-                );
-                setTotalPages(count);
+                // const count = Math.ceil(
+                //     response.pagination._totalRows / response.pagination._limit
+                // );
+                // setTotalPages(count);
             } catch (error) {
                 console.log("Failed to fetch product list: ", error);
             }
         };
         fetchProductList();
-
-        // return fetchProductList;
     }, [pagination]);
 
-    const handlePageChange = (event: unknown, newPage: number) => {
+    const handlePageChange = (e: unknown, newPage: number) => {
         setPagination({
             ...pagination,
             _page: newPage,
@@ -80,16 +79,6 @@ function Main() {
                 <Box sx={{ my: 4 }}>
                     <PostFiltersForm onSubmit={handleFiltersChange} />
 
-                    {/* <Box sx={{ my: 4 }}>
-                        <ul>
-                            {productList.map((product) => (
-                                <li key={product.id}>
-                                    {product.name} - {product.salePrice}đ
-                                </li>
-                            ))}
-                        </ul>
-                    </Box> */}
-
                     <div
                         style={{
                             marginTop: "40px",
@@ -100,8 +89,8 @@ function Main() {
                         <DataGrid
                             rows={productList}
                             columns={columns}
-                            pageSize={5}
-                            rowsPerPageOptions={[5]}
+                            pageSize={10}
+                            rowsPerPageOptions={[10]}
                             checkboxSelection
                         />
                     </div>

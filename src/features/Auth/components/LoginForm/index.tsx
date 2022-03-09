@@ -1,28 +1,28 @@
-import React from "react";
 import { Button, CircularProgress, Grid } from "@mui/material";
 import { useForm, FormProvider } from "react-hook-form";
 import InputField from "../../../../custom-fields/InputField";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { User } from "../../../../models";
 
-interface IAuthFormProps {
-    onSubmit: any;
-    initialValues: {} | undefined;
+interface LoginFormProps {
+    onSubmit: (data: User) => Promise<void>;
 }
 
 const validationSchema = Yup.object().shape({
-    email: Yup.string().email().required("Email required"),
+    email: Yup.string()
+        .email("Email must be a valid email.")
+        .required("Email required."),
     password: Yup.string()
-        .required("Password required")
+        .required("Password required.")
         .min(8, "Password is too short - should be 8 chars minimum.")
         .matches(/(?=.*[0-9])/, "Password must contain a number."),
 });
 
-function AuthForm(props: IAuthFormProps) {
-    const { onSubmit, initialValues } = props;
+function LoginForm(props: LoginFormProps) {
+    const { onSubmit } = props;
 
-    const methods = useForm({
-        defaultValues: initialValues,
+    const methods = useForm<User>({
         resolver: yupResolver(validationSchema),
     });
 
@@ -69,4 +69,4 @@ function AuthForm(props: IAuthFormProps) {
     );
 }
 
-export default AuthForm;
+export default LoginForm;

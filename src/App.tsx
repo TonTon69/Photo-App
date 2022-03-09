@@ -1,10 +1,12 @@
 import React, { Suspense } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import Header from "./components/Header";
 import NotFound from "./components/NotFound";
 import SignIn from "./features/Auth/pages/SignIn";
+import SignUp from "./features/Auth/pages/SignUp";
 
 import Product from "./features/Product";
 import PrivateRoute from "./components/PrivateRoute";
@@ -26,7 +28,7 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <div className="App">
-                <Suspense fallback={<div>Loading ...</div>}>
+                <Suspense fallback={<CircularProgress />}>
                     <BrowserRouter>
                         <Header />
 
@@ -37,6 +39,7 @@ function App() {
                             />
                             <Route path="/photos/*" element={<Photo />} />
                             <Route path="/sign-in" element={<SignIn />} />
+                            <Route path="/sign-up" element={<SignUp />} />
                             <Route
                                 path="/products/*"
                                 element={

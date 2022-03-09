@@ -1,25 +1,14 @@
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
+import axiosLocal from "./axiosLocal";
 
 const userApi = {
-    getMe: () => {
-        // TODO: Call API to get current user
-        return new Promise((resolve, reject) => {
-            // reject(new Error('MY CUSTOM ERROR'));
-            // return;
+    signup: (email: string, password: string) => {
+        const url = "/users";
+        return axiosLocal.post(url, { email, password });
+    },
 
-            // Wait 500ms --> return result
-            setTimeout(() => {
-                const currentUser = firebase.auth().currentUser;
-
-                resolve({
-                    id: currentUser?.uid,
-                    name: currentUser?.displayName,
-                    email: currentUser?.email,
-                    photoUrl: currentUser?.photoURL,
-                });
-            }, 500);
-        });
+    signin: (email: string, password: string) => {
+        const url = "/auth";
+        return axiosLocal.post(url, { email, password });
     },
 };
 

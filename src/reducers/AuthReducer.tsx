@@ -1,7 +1,7 @@
 import { User } from "../models";
 import { AuthActionType } from "./types";
 
-const { LOGIN, LOGOUT, POPULATE, STOP_LOADING } = AuthActionType;
+const { LOGIN, LOGOUT } = AuthActionType;
 
 export interface AuthState {
     isAuthenticated: boolean;
@@ -28,19 +28,6 @@ export const authReducer = (state: AuthState, action: AuthAction) => {
                 ...state,
                 isAuthenticated: false,
                 user: null,
-            };
-        case POPULATE:
-            return {
-                ...state,
-                user: {
-                    ...state.user,
-                    ...action.payload,
-                },
-            };
-        case STOP_LOADING:
-            return {
-                ...state,
-                loading: false,
             };
         default:
             throw new Error(`Unknown action type: ${action.type}`);
