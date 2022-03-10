@@ -6,10 +6,20 @@ import {
     Toolbar,
     Typography,
 } from "@mui/material";
-import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { AuthDefaultData } from "../../contexts/AuthContext";
 
 function Header() {
+    const value = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        value?.setAuth(AuthDefaultData);
+        navigate("/sign-in");
+    };
+
     return (
         <AppBar
             position="static"
@@ -35,23 +45,23 @@ function Header() {
                             <Button variant="text">Products</Button>
                         </Link>
                     </Box>
-                    {/* {isAuthenticated ? (
+                    {value?.auth.email ? (
                         <Box sx={{ display: "flex", alignItems: "center" }}>
-                            <Typography fontWeight={600}>{username}</Typography>
+                            <AccountCircleIcon />
                             <Box sx={{ ml: 2 }}>
                                 <Button
                                     variant="outlined"
-                                    // onClick={toggleAuth.bind(this, "")}
+                                    onClick={handleLogout}
                                 >
                                     Logout
                                 </Button>
                             </Box>
                         </Box>
-                    ) : ( */}
-                    <Link to="/sign-in">
-                        <Button variant="outlined">Sign In</Button>
-                    </Link>
-                    {/* )} */}
+                    ) : (
+                        <Link to="/sign-in">
+                            <Button variant="outlined">Sign In</Button>
+                        </Link>
+                    )}
                 </Toolbar>
             </Container>
         </AppBar>

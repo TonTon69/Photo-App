@@ -1,14 +1,17 @@
+import { ROLES } from "../constants/roles";
+import { User } from "../models";
 import axiosLocal from "./axiosLocal";
 
 const userApi = {
     signup: (email: string, password: string) => {
         const url = "/users";
-        return axiosLocal.post(url, { email, password });
+        const roles = [ROLES.User];
+        return axiosLocal.post(url, { email, password, roles });
     },
 
-    signin: (email: string, password: string) => {
-        const url = "/auth";
-        return axiosLocal.post(url, { email, password });
+    signin: (params: { email: string; password: string }) => {
+        const url = "/users";
+        return axiosLocal.get(url, { params });
     },
 };
 

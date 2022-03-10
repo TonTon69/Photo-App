@@ -1,15 +1,20 @@
-import React from "react";
-import { Navigate, Route, RouteProps } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import { useAuth } from "../../hooks";
 
-export interface IPrivateRouteProps {}
+export interface PrivateRouteProps {
+    allowedRoles: number[];
+}
 
-function PrivateRoute(props: RouteProps) {
-    const isLoggedIn = Boolean(localStorage.getItem("access_token"));
-    console.log("loggin");
+function PrivateRoute({ allowedRoles }: PrivateRouteProps) {
+    const value = useAuth();
 
-    if (!isLoggedIn) return <Navigate to="/sign-in" />;
-
-    return <Route {...props} />;
+    return value?.auth?.roles?.find((role) => allowedRoles?.includes(role)) ? (
+        <Outlet />
+    ) : value?.auth?.email ? (
+        <Navigate to="/unauthorized" replace />
+    ) : (
+        <Navigate to="/sign-in" replace />
+    );
 }
 
 export default PrivateRoute;

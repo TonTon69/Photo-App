@@ -3,13 +3,13 @@
         {
             "email": "hoanghuynh0609@gmail.com",
             "password": "123123123",
+            "roles": [5150],
             "id": 1
-        }
-    ],
-    "auth": [
+        },
         {
-            "email": "hoanghuynh0609@gmail.com",
+            "email": "hoanghuynh@gmail.com",
             "password": "123123123",
+            "roles": [2001],
             "id": 1
         }
     ]

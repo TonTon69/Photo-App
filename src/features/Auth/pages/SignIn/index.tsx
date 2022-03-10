@@ -11,18 +11,14 @@ function SignIn() {
 
     const handleSubmit = async (formData: User) => {
         try {
-            console.log(formData);
-            const { email, password } = formData;
-            const response = await userApi.signin(email, password);
-            const accessToken = response?.data?.accessToken;
-            const roles = response?.data?.roles;
+            const response = await userApi.signin(formData);
+            response?.data.map((user: User) => {
+                const { roles } = user;
+                value?.setAuth({ ...formData, roles });
+                return roles;
+            });
 
-            console.log("roles: " + roles);
-            console.log("accessToken: " + accessToken);
-
-            value?.setAuth({ email, password, roles, accessToken });
-
-            // history("/");
+            history("/", { replace: true });
         } catch (error) {
             console.log("Error: " + error);
         }
