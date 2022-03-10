@@ -7,12 +7,13 @@ function* handleLogin(payload: LoginPayload) {
         yield delay(1000);
         console.log("Login: ", payload);
         localStorage.setItem("access_token", "fake_token");
-        // yield put(
-        //     authActions.loginSuccess({
-        //         id: 1,
-        //         name: "tonton",
-        //     })
-        // );
+        yield put(
+            authActions.loginSuccess({
+                email: "hoanghuynh0609@gmail.com",
+                password: "123123123",
+                roles: [5150],
+            })
+        );
     } catch (error) {
         yield put(authActions.loginFailed((error as Error).message));
     }

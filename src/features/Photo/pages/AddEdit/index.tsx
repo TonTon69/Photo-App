@@ -7,15 +7,9 @@ import Banner from "../../../../components/Banner";
 import PhotoForm from "../../components/PhotoForm";
 import { addPhoto, updatePhoto } from "../../photoSlice";
 import { v4 as uuidv4 } from "uuid";
+import { Photo } from "../../../../models";
 
 import "./AddEdit.scss";
-
-interface PhotoFormData {
-    id: string;
-    title: string;
-    categoryId: number;
-    photo: string;
-}
 
 function AddEdit() {
     const dispatch = useDispatch();
@@ -30,7 +24,7 @@ function AddEdit() {
 
     const initialValues = isAddMode ? {} : editedPhoto;
 
-    const handleSubmit = (values: PhotoFormData) => {
+    const handleSubmit = (values: Photo) => {
         return new Promise((resolve) => {
             setTimeout(() => {
                 if (isAddMode) {
@@ -46,7 +40,7 @@ function AddEdit() {
                     dispatch(action);
                 }
 
-                history("/photos", { state: true });
+                history("/photos", { state: { success: true }, replace: true });
                 resolve(true);
             }, 2000);
         });

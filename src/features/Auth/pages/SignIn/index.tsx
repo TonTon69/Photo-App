@@ -1,13 +1,16 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import LoginForm from "../../components/LoginForm";
 import { useAuth } from "../../../../hooks";
 import { User } from "../../../../models";
 import userApi from "../../../../api/userApi";
+import { authActions } from "../../authSlice";
+import { useAppDispatch } from "../../../../app/hooks";
 
 function SignIn() {
     const history = useNavigate();
     const value = useAuth();
+    const dispatch = useAppDispatch();
 
     const handleSubmit = async (formData: User) => {
         try {
@@ -18,10 +21,19 @@ function SignIn() {
                 return roles;
             });
 
-            history("/", { replace: true });
+            history("/admin/dashboard", { replace: true });
         } catch (error) {
             console.log("Error: " + error);
         }
+    };
+
+    const handleSubmitClick = () => {
+        dispatch(
+            authActions.login({
+                email: "",
+                password: "",
+            })
+        );
     };
 
     return (
@@ -37,6 +49,8 @@ function SignIn() {
                         Do not have an account?
                     </Typography>
                 </Link>
+
+                <Button onClick={handleSubmitClick}>Fake login</Button>
             </Container>
         </Box>
     );

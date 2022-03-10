@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Box, Button, Container } from "@mui/material";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import Banner from "../../../../components/Banner";
 import Images from "../../../../constants/images";
@@ -30,7 +30,6 @@ function Main() {
 
     // connect store
     const getPhotoList = useAppSelector((state) => state.photo.photoList);
-    console.log("List of photos: ", getPhotoList);
 
     const handlePhotoEditClick = (photo: Photo) => {
         const editPhotoUrl = `/photos/${photo.id}`;
@@ -80,9 +79,9 @@ function Main() {
 
             <Container>
                 <Box sx={{ my: 4, textAlign: "center" }}>
-                    <Link to="/photos/add">
+                    <NavLink to="/photos/add">
                         <Button variant="outlined">Add a new photo</Button>
-                    </Link>
+                    </NavLink>
                 </Box>
 
                 <Box sx={{ mb: 6 }}>

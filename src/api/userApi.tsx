@@ -1,5 +1,4 @@
 import { ROLES } from "../constants/roles";
-import { User } from "../models";
 import axiosLocal from "./axiosLocal";
 
 const userApi = {

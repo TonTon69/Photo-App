@@ -6,14 +6,24 @@ import {
     Toolbar,
     Typography,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { makeStyles } from "@mui/styles";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { AuthDefaultData } from "../../contexts/AuthContext";
 
+const useStyles = makeStyles(() => ({
+    link: {
+        "&.active > button": {
+            color: "black",
+        },
+    },
+}));
+
 function Header() {
     const value = useAuth();
     const navigate = useNavigate();
+    const classes = useStyles();
 
     const handleLogout = () => {
         value?.setAuth(AuthDefaultData);
@@ -22,6 +32,7 @@ function Header() {
 
     return (
         <AppBar
+            sx={{ boxShadow: 0 }}
             position="static"
             style={{ backgroundColor: "#fafafa", color: "#111" }}
         >
@@ -32,18 +43,21 @@ function Header() {
                         justifyContent: "space-between",
                     }}
                 >
-                    <Link to="/">
+                    <NavLink to="/">
                         <Typography variant="h6" fontWeight={700}>
                             H69
                         </Typography>
-                    </Link>
+                    </NavLink>
                     <Box>
-                        <Link to="/photos">
+                        <NavLink to="/admin" className={classes.link}>
+                            <Button variant="text">Admin</Button>
+                        </NavLink>
+                        <NavLink to="/photos" className={classes.link}>
                             <Button variant="text">Photos</Button>
-                        </Link>
-                        <Link to="/products">
+                        </NavLink>
+                        <NavLink to="/products" className={classes.link}>
                             <Button variant="text">Products</Button>
-                        </Link>
+                        </NavLink>
                     </Box>
                     {value?.auth.email ? (
                         <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -58,9 +72,9 @@ function Header() {
                             </Box>
                         </Box>
                     ) : (
-                        <Link to="/sign-in">
+                        <NavLink to="/sign-in">
                             <Button variant="outlined">Sign In</Button>
-                        </Link>
+                        </NavLink>
                     )}
                 </Toolbar>
             </Container>

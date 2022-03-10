@@ -12,8 +12,9 @@ import Product from "./features/Product";
 import PrivateRoute from "./components/PrivateRoute";
 import { ROLES } from "./constants/roles";
 import Unauthorized from "./components/Unauthorized";
-import "./App.css";
+import { AdminLayout } from "./components/Layout";
 
+import "./App.css";
 // Lazy load - Code splitting
 const Photo = React.lazy(() => import("./features/Photo"));
 
@@ -39,13 +40,22 @@ function App() {
                                 path="/"
                                 element={<Navigate to="/photos" />}
                             />
-                            <Route
-                                path="unauthorized"
-                                element={<Unauthorized />}
-                            />
                             <Route path="photos/*" element={<Photo />} />
                             <Route path="sign-in" element={<SignIn />} />
                             <Route path="sign-up" element={<SignUp />} />
+
+                            <Route
+                                element={
+                                    <PrivateRoute
+                                        allowedRoles={[ROLES.Admin]}
+                                    />
+                                }
+                            >
+                                <Route
+                                    path="admin/*"
+                                    element={<AdminLayout />}
+                                />
+                            </Route>
                             <Route
                                 element={
                                     <PrivateRoute
@@ -59,6 +69,10 @@ function App() {
                                 />
                             </Route>
 
+                            <Route
+                                path="unauthorized"
+                                element={<Unauthorized />}
+                            />
                             <Route path="*" element={<NotFound />} />
                         </Routes>
                     </BrowserRouter>

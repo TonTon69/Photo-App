@@ -1,4 +1,4 @@
-import { Alert, makeStyles, Snackbar } from "@mui/material";
+import { Alert, Snackbar } from "@mui/material";
 import React from "react";
 
 interface INotificationProps {
@@ -6,15 +6,8 @@ interface INotificationProps {
     setNotify: any;
 }
 
-// const useStyles = makeStyles((theme: any) => ({
-//     root: {
-//         top: theme.spacing(9),
-//     },
-// }));
-
 function Notification(props: INotificationProps) {
     const { notify, setNotify } = props;
-    // const classes = useStyles();
 
     const handleClose = (
         event?: React.SyntheticEvent | Event,
@@ -31,7 +24,6 @@ function Notification(props: INotificationProps) {
 
     return (
         <Snackbar
-            // className={classes.root}
             open={notify.isOpen}
             autoHideDuration={3000}
             anchorOrigin={{ vertical: "top", horizontal: "right" }}
