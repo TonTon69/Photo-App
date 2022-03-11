@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
@@ -14,7 +14,10 @@ import { ROLES } from "./constants/roles";
 import Unauthorized from "./components/Unauthorized";
 import { AdminLayout } from "./components/Layout";
 
+import { history } from "./utils";
 import "./App.css";
+import CustomRouter from "./routes/CustomRouter";
+
 // Lazy load - Code splitting
 const Photo = React.lazy(() => import("./features/Photo"));
 
@@ -32,7 +35,7 @@ function App() {
         <ThemeProvider theme={theme}>
             <div className="App">
                 <Suspense fallback={<CircularProgress />}>
-                    <BrowserRouter>
+                    <CustomRouter history={history}>
                         <Header />
 
                         <Routes>
@@ -44,18 +47,15 @@ function App() {
                             <Route path="sign-in" element={<SignIn />} />
                             <Route path="sign-up" element={<SignUp />} />
 
-                            <Route
+                            {/* <Route
                                 element={
                                     <PrivateRoute
                                         allowedRoles={[ROLES.Admin]}
                                     />
                                 }
                             >
-                                <Route
-                                    path="admin/*"
-                                    element={<AdminLayout />}
-                                />
-                            </Route>
+                            </Route> */}
+                            <Route path="admin/*" element={<AdminLayout />} />
                             <Route
                                 element={
                                     <PrivateRoute
@@ -75,7 +75,7 @@ function App() {
                             />
                             <Route path="*" element={<NotFound />} />
                         </Routes>
-                    </BrowserRouter>
+                    </CustomRouter>
                 </Suspense>
             </div>
         </ThemeProvider>

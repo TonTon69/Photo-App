@@ -11,6 +11,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { AuthDefaultData } from "../../contexts/AuthContext";
+import { useAppDispatch } from "../../app/hooks";
+import { authActions } from "../../features/Auth/authSlice";
 
 const useStyles = makeStyles(() => ({
     link: {
@@ -21,15 +23,21 @@ const useStyles = makeStyles(() => ({
 }));
 
 function Header() {
+    const dispatch = useAppDispatch();
     const value = useAuth();
     const navigate = useNavigate();
     const classes = useStyles();
 
     const handleLogout = () => {
-        value?.setAuth(AuthDefaultData);
-        navigate("/sign-in");
+        if (value) {
+            value?.setAuth(AuthDefaultData);
+            navigate("/sign-in");
+        }
+
+        dispatch(authActions.logout());
     };
 
+    const isLoggedIn = Boolean(localStorage.getItem("access_token"));
     return (
         <AppBar
             sx={{ boxShadow: 0 }}
@@ -59,7 +67,7 @@ function Header() {
                             <Button variant="text">Products</Button>
                         </NavLink>
                     </Box>
-                    {value?.auth.email ? (
+                    {value?.auth.email || isLoggedIn ? (
                         <Box sx={{ display: "flex", alignItems: "center" }}>
                             <AccountCircleIcon />
                             <Box sx={{ ml: 2 }}>
